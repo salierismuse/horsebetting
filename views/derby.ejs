@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <title>THE DERBY</title>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+
+    <body>
+        <div class="lane-track">
+            <div class="horse" id="horse-<%= horses[0].id %>">H</div>
+            </div>
+            <div class="lane-track">
+            <div class="horse" id="horse-<%= horses[1].id %>">H</div>
+            </div>
+            <div class="lane-track">
+            <div class="horse" id="horse-<%= horses[2].id %>">H</div>
+        </div>
+
+        <div class="bookie">
+            <h2>Place your bets!</h2>
+            <form action="/bet" method="POST">
+                <input type="number" name="betAmount" placeholder="Bet amount...">
+                <select name="horseId">
+                    <option value="<%= horses[0].id %>"><%= horses[0].name %></option>
+                    <option value="<%= horses[1].id %>"><%= horses[1].name %></option>
+                    <option value="<%= horses[2].id %>"><%= horses[2].name %></option>
+                </select>
+                <button type="submit">Place Bet</button>
+            </form>
+        </div>
+    </body>
+
+</html>
