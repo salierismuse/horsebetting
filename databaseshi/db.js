@@ -41,8 +41,8 @@ const existingHorses = db.prepare('SELECT COUNT(*) as count FROM horses').get();
 if (existingHorses.count === 0) {
   const insertHorse = db.prepare('INSERT INTO horses (name, quirks, speed) VALUES (?, ?, ?)');
 
-  insertHorse.run('Jangles', JSON.stringify({ start: 0.7, end: 1.2, luck: 2, rain: 1.0, sun: 1.0 }), 8);
-  insertHorse.run('Echo', JSON.stringify({ start: 1.3, end: 1.0, luck: 0.7, rain: 1.5, sun: 0.8 }), 10);
+  insertHorse.run('Jangles', JSON.stringify({ start: 0.7, end: 1.2, luck: 3, rain: 1.0, sun: 1.0 }), 8);
+  insertHorse.run('Echo', JSON.stringify({ start: 1.3, end: 1.0, luck: 1.1, rain: 1.5, sun: 0.8 }), 10);
   insertHorse.run('Blaze', JSON.stringify({ start: 2.0, end: 0.3, luck: 2.0, rain: 0.5, sun: 1.5 }), 12);
 
 }
