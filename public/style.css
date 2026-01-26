@@ -6,3 +6,19 @@
   border-left: 3px solid black;
   border-right: 3px solid black;
 }
+
+.horse {
+    position: absolute; /* Allows 'left' style to work */
+    top: 10px;          /* Centers it vertically in the lane */
+    left: 0;            /* Start at the beginning */
+    
+    /* Optional styling to make it look like a token */
+    width: 30px;
+    height: 30px;
+    background-color: brown;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px; /* Centers the 'H' text vertically */
+    transition: left 0.5s linear; /* Makes the movement smooth instead of jumpy */
+}

@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
 
 app.post('/start-race', (req, res) => {
 
-    const result = db.prepare('INSERT INTO races (condition, start_time) VALUES (?, ?)').run('sunny', new Date().toISOString());
+    const result = db.prepare('INSERT INTO races (condition, start_time) VALUES (?, ?)').run('rainy', new Date().toISOString());
     const raceId = result.lastInsertRowid;
     raceRun(raceId, db, io);
     
