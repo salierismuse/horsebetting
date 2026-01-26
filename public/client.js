@@ -8,4 +8,10 @@ socket.on('tick', (positions) => {
 
 socket.on('raceEnd', (data) => {
     console.log('Winner:', data.winner);
+    const horses = document.querySelectorAll('.horse');
+    setTimeout(() => {
+            horses.forEach(horse => {
+                horse.style.left = '0%';
+            });
+        }, 2000); 
 });

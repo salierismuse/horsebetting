@@ -23,6 +23,11 @@
             </form>
         </div>
 
+        <div class="timer">
+            <h2 id="timer-header">TIME UNTIL NEXT RACE</h2>
+            <div id="timer" data-start="<%= raceStartTime %>">Loading...</div>
+        </div>
+
         <div class="bookie">
             <h2>Place your bets!</h2>
             <form action="/bet" method="POST">
@@ -38,6 +43,32 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/client.js"></script>
+
+    <script>
+    const timerEl = document.getElementById('timer');
+    const startTime = parseInt(timerEl.dataset.start);
+
+    function updateTimer() {
+        const now = Date.now();
+        const diff = startTime - now;
+
+        if (diff <= 0) {
+            timerEl.innerText = "RACE IN PROGRESS";
+            return;
+        }
+
+        // Simple math to get minutes and seconds
+        const minutes = Math.floor(diff / 60000);
+        const seconds = Math.floor((diff % 60000) / 1000);
+
+        // Add a leading zero if seconds is less than 10 (e.g., 4:05)
+        timerEl.innerText = `Next Race: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    // Update immediately, then every second
+    updateTimer();
+    setInterval(updateTimer, 1000);
+    </script>
     </body>
 
 </html>
