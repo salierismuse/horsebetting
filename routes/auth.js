@@ -22,7 +22,14 @@ router.post('/login', async (req, res) => {
         return res.send('Invalid credentials');
      } 
      req.session.userId = user.id;
-     res.redirect('/dashboard');
+     res.redirect('/derby');
+});
+
+router.post('/logout', (req, res) => {
+    req.session.destroy(() => {
+    res.clearCookie('connect.sid');
+    res.redirect('/login');
+});
 });
 
 router.get('/register', (req, res) => {

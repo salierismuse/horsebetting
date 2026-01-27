@@ -2,7 +2,7 @@ require ('dotenv').config();
 const express = require('express');
 const app = express();
 const derbyRoutes = require('./routes/derby');
-app.use('/', derbyRoutes);
+
 app.use(express.static('public'));
 const http = require('http');
 const { raceRun, derby } = require('./lib/race');
@@ -39,8 +39,14 @@ app.post('/start-race', (req, res) => {
     res.redirect('/derby');
 });
 
+app.use((req, res, next) => {
+    res.locals.isLoggedIn = !!req.session.userId;
+    res.locals.currentUser = req.session.userId;
 
+    next();
+});
 
+app.use('/', derbyRoutes);
 
 server.listen(port, () => {
     console.log("server listening");

@@ -29,6 +29,7 @@
         </div>
 
         <div class="bookie">
+            <% if (isLoggedIn) { %>
             <h2>Place your bets!</h2>
             <form action="/bet" method="POST">
                 <input type="number" name="betAmount" placeholder="Bet amount...">
@@ -39,6 +40,7 @@
                 </select>
                 <button type="submit">Place Bet</button>
             </form>
+            <% } %>
         </div>
 
     <script src="/socket.io/socket.io.js"></script>
