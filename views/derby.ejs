@@ -31,6 +31,7 @@
         <div class="bookie">
             <% if (isLoggedIn) { %>
             <h2>Place your bets!</h2>
+            <h3>Your current balance: <%= currentBalance %></3>
             <form action="/bet" method="POST">
                 <input type="number" name="betAmount" placeholder="Bet amount...">
                 <select name="horseId">

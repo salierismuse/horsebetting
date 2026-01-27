@@ -43,7 +43,15 @@ app.use((req, res, next) => {
     res.locals.isLoggedIn = !!req.session.userId;
     res.locals.currentUser = req.session.userId;
 
-    next();
+    // for fetching nextraceId
+    const race = db.prepare('SELECT id FROM races WHERE start_time > ? ORDER BY start_time ASC LIMIT 1');
+    const nextRaceRow = race.get(new Date().toISOString());
+    res.locals.nextRace = nextRaceRow ? nextRaceRow.id : null;
+
+    if (res.locals.isLoggedIn) {
+        res.locals.currentBalance = db.prepare('SELECT balance FROM users WHERE id = ?').get(req.session.userId).balance;
+    }
+        next();
 });
 
 app.use('/', derbyRoutes);
