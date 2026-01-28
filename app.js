@@ -17,12 +17,32 @@ const session = require('express-session');
 app.set('view engine', 'ejs')
 app.set('views', './views');  
 
+
+
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false
 }));
+
+app.use((req, res, next) => {
+    res.locals.isLoggedIn = !!req.session.userId;
+    res.locals.currentUser = req.session.userId;
+
+    // for fetching nextraceId
+    const race = db.prepare('SELECT id FROM races ORDER BY id DESC LIMIT 1');
+    const nextRaceRow = race.get();
+    res.locals.nextRace = nextRaceRow ? nextRaceRow.id : null;
+
+    if (res.locals.isLoggedIn) {
+        res.locals.currentBalance = db.prepare('SELECT balance FROM users WHERE id = ?').get(req.session.userId).balance;
+    }
+        next();
+});
+
+const betRoutes = require('./routes/bet.js');
+app.use('/', betRoutes);
 
 const authRoutes = require('./routes/auth');
 app.use('/', authRoutes);
@@ -37,21 +57,6 @@ app.post('/start-race', (req, res) => {
     const raceId = result.lastInsertRowid;
     
     res.redirect('/derby');
-});
-
-app.use((req, res, next) => {
-    res.locals.isLoggedIn = !!req.session.userId;
-    res.locals.currentUser = req.session.userId;
-
-    // for fetching nextraceId
-    const race = db.prepare('SELECT id FROM races WHERE start_time > ? ORDER BY start_time ASC LIMIT 1');
-    const nextRaceRow = race.get(new Date().toISOString());
-    res.locals.nextRace = nextRaceRow ? nextRaceRow.id : null;
-
-    if (res.locals.isLoggedIn) {
-        res.locals.currentBalance = db.prepare('SELECT balance FROM users WHERE id = ?').get(req.session.userId).balance;
-    }
-        next();
 });
 
 app.use('/', derbyRoutes);

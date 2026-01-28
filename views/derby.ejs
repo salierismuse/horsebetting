@@ -7,6 +7,28 @@
     </head>
 
     <body>
+        <div class="login">
+            <% if (!isLoggedIn) { %>
+                <form action="/login" method="POST">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required/>
+
+                    <label for ="password">Password:</label>
+                    <input type="password" id="password" name="password" required/>
+
+                    <button type="submit">Login</button>
+                </form>
+                <form action="/register" method="POST">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required/>
+
+                    <label for ="password">Password:</label>
+                    <input type="password" id="password" name="password" required/>
+
+                    <button type="submit">Register</button>
+                </form>
+            <% } %>
+        </div>
         <div class="lane-track">
             <div class="horse" id="horse-<%= horses[0].id %>">H</div>
             </div>
@@ -15,12 +37,6 @@
             </div>
             <div class="lane-track">
             <div class="horse" id="horse-<%= horses[2].id %>">H</div>
-        </div>
-
-        <div class ="dev">
-            <form action="/start-race" method="POST">
-                <button type="submit">Start Race</button>
-            </form>
         </div>
 
         <div class="timer">
@@ -46,6 +62,17 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/client.js"></script>
+    
+    <script>
+        const betSocket = io();
+        betSocket.on('raceEnd', (data) => {
+            console.log("race over! Winner:", data.winner);
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000);
+            })
+    </script>
 
     <script>
     const timerEl = document.getElementById('timer');
