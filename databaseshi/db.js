@@ -7,7 +7,8 @@ db.exec(`
     username TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
     balance INTEGER DEFAULT 10000,
-    last_login TEXT
+    last_login TEXT,
+    winnings INTEGER DEFAULT 0
   );
 
   CREATE TABLE IF NOT EXISTS horses (

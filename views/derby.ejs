@@ -59,6 +59,13 @@
             </form>
             <% } %>
         </div>
+    
+        <div class="leaderboard">
+            <h2>Leaderboard!</h2>
+            <% for (let i = 1; i < topTen.length+1; i++) { %>
+                <li>1: <%= topTen[i-1][0] %>: <%=topTen[i-1][1]%></li>
+            <% } %>
+        </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/client.js"></script>

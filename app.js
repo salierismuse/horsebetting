@@ -35,6 +35,11 @@ app.use((req, res, next) => {
     const nextRaceRow = race.get();
     res.locals.nextRace = nextRaceRow ? nextRaceRow.id : null;
 
+    // get top ten for leaderboard
+    topTenRows = db.prepare('SELECT * FROM users ORDER BY winnings DESC LIMIT 10').all();
+    res.locals.topTen = topTenRows.map(row => [row.username, row.winnings]);
+    console.log(res.locals.topTen[0][0]);
+
     if (res.locals.isLoggedIn) {
         res.locals.currentBalance = db.prepare('SELECT balance FROM users WHERE id = ?').get(req.session.userId).balance;
     }
